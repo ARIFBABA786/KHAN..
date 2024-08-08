@@ -1,10 +1,10 @@
 module.exports.config = {
-	name: "PREM-RANKUP-2",
-	version: "3.3.1",
+	name: "rankup",
+	version: "7.3.1",
 	hasPermssion: 1,
-	credits: "PREM BABU",
-	description: "THIS BOT IS MADE BY PREM BABU",
-	commandCategory: "LEVAL UP",
+	credits: "Gudiya",
+	description: "Announce rankup for each group, user",
+	commandCategory: "Edit-IMG",
 	dependencies: {
 		"fs-extra": ""
 	},
@@ -17,7 +17,7 @@ module.exports.handleEvent = async function({ api, event, Currencies, Users, get
   const { loadImage, createCanvas } = require("canvas");
   const fs = global.nodemodule["fs-extra"];
   const axios = global.nodemodule["axios"];
-  let pathImg = __dirname + "/PREM-BABU/RANKUP/rankup.png";
+  let pathImg = __dirname + "/noprefix/rankup/rankup.png";
   let pathAvt1 = __dirname + "/cache/Avtmot.png";
   var id1 = event.senderID;
   
@@ -52,12 +52,7 @@ module.exports.handleEvent = async function({ api, event, Currencies, Users, get
 		const moduleName = this.config.name;
 
     var background = [
-  "https://i.imgur.com/nrvl1sp.jpeg",
-  "https://i.imgur.com/UUqFWIm.jpeg",
-  "https://i.imgur.com/j6ltfNU.jpeg",
-  "https://i.imgur.com/zAf5CqH.jpeg",
-  "https://i.imgur.com/ZLh0u6o.jpeg"  
-  ];
+  "https://i.imgur.com/rfDdAPX.jpg","https://i.imgur.com/A4Eq1YY.jpg"];
     var rd = background[Math.floor(Math.random() * background.length)];
     let getAvtmot = (
     await axios.get(
@@ -79,8 +74,8 @@ module.exports.handleEvent = async function({ api, event, Currencies, Users, get
     let canvas = createCanvas(baseImage.width, baseImage.height);
     let ctx = canvas.getContext("2d");
     ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
-    ctx.rotate(-0 * Math.PI / 180);
-    ctx.drawImage(baseAvt1, 400, 541, 800, 1005);
+    ctx.rotate(-25 * Math.PI / 180);
+    ctx.drawImage(baseAvt1, 70, 700, 635, 700);
     const imageBuffer = canvas.toBuffer();
     fs.writeFileSync(pathImg, imageBuffer);
     fs.removeSync(pathAvt1);
@@ -93,11 +88,17 @@ module.exports.handleEvent = async function({ api, event, Currencies, Users, get
 }
 
 module.exports.languages = {
+	"vi": {
+		"off": "𝗧𝗮̆́𝘁",
+		"on": "𝗕𝗮̣̂𝘁",
+		"successText": "𝐭𝐡𝐚̀𝐧𝐡 𝐜𝐨̂𝐧𝐠 𝐭𝐡𝐨̂𝐧𝐠 𝐛𝐚́𝐨 𝐫𝐚𝐧𝐤𝐮𝐩 ✨",
+		"levelup": "🌸 𝗞𝗶̃ 𝗻𝗮̆𝗻𝗴 𝘅𝗮̣𝗼 𝗹𝗼̂̀𝗻𝗻 𝗼̛̉ 𝗺𝗼̂𝗻 𝗽𝗵𝗮́𝗽 𝗵𝗮̂́𝗽 𝗱𝗶𝗲̂𝗺 𝗰𝘂̉𝗮 {name} 𝘃𝘂̛̀𝗮 𝗹𝗲̂𝗻 𝘁𝗼̛́𝗶 𝗹𝗲𝘃𝗲𝗹 {level} 🌸"
+	},
 	"en": {
 		"on": "on",
 		"off": "off",
 		"successText": "success notification rankup!",
-		"levelup": "◦•●◉✿ दिल की बात ✿◉●•◦",
+		"levelup": "{name}, 𒁍 बधाई हो आपका लेवल [{level}] हो गया 😐🙈",
 	}
 }
 
@@ -111,4 +112,4 @@ module.exports.run = async function({ api, event, Threads, getText }) {
 	await Threads.setData(threadID, { data });
 	global.data.threadData.set(threadID, data);
 	return api.sendMessage(`${(data["rankup"] == true) ? getText("on") : getText("off")} ${getText("successText")}`, threadID, messageID);
-                            }
+             }
